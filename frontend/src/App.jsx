@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+// API base URL - use production backend or fallback to localhost
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 // Main App component
 const App = () => {
   // State variables for managing UI and data
@@ -64,7 +67,7 @@ const App = () => {
     });
 
     try {
-      const response = await fetch('http://localhost:5000/upload', {
+      const response = await fetch(`${API_URL}/upload`, {
         method: 'POST',
         body: formData,
       });
@@ -118,7 +121,7 @@ const App = () => {
     setLoading(true); 
     setError(''); 
     try {
-      const response = await fetch('http://localhost:5000/ask', {
+      const response = await fetch(`${API_URL}/ask`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -161,7 +164,7 @@ const App = () => {
     const combinedTextForQuestion = successfullyProcessedPdfs.map(pdf => pdf.text).join('\n\n---\n\n');
 
     try {
-      const response = await fetch('http://localhost:5000/ask', {
+      const response = await fetch(`${API_URL}/ask`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -272,7 +275,7 @@ const App = () => {
 
     try {
       // Call the new /compare-html endpoint on the backend
-      const response = await fetch('http://localhost:5000/compare-html', { 
+      const response = await fetch(`${API_URL}/compare-html`, { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -289,7 +292,7 @@ const App = () => {
 
       const data = await response.json();
       // Open the generated comparison HTML in a new tab
-      window.open(`http://localhost:5000${data.comparisonUrl}`, '_blank'); 
+      window.open(`${API_URL}${data.comparisonUrl}`, '_blank'); 
     } catch (err) {
       console.error('Comparison Error:', err);
       setError(err.message);
@@ -310,7 +313,7 @@ const App = () => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:5000/dashboard', { 
+      const response = await fetch(`${API_URL}/dashboard`, { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -327,7 +330,7 @@ const App = () => {
 
       const data = await response.json(); 
       // Open the generated dashboard HTML in a new tab
-      window.open(`http://localhost:5000${data.dashboardUrl}`, '_blank'); 
+      window.open(`${API_URL}${data.dashboardUrl}`, '_blank'); 
       
     } catch (err) { 
       console.error('Dashboard Generation Error:', err);
