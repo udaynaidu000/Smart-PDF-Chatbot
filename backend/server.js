@@ -10,7 +10,7 @@ const axios = require('axios');
 const pdfTableToHTMLDashboard = require('./utils/pdfDashboard');
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 // Allow any origin during local development (covers localhost and 127.0.0.1 on Vite ports)
 app.use(cors());
